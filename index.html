@@ -1,4 +1,4 @@
-o<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -6,7 +6,7 @@ o<!DOCTYPE html>
   <link rel="stylesheet" type="text/css" href="style.css"/>
   <script type ='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script type='text/javascript' src = '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
-  <script type = 'text/javascript' href="geojson.js"></script>
+  <script type = 'text/javascript' src="geojson.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
@@ -120,22 +120,22 @@ o<!DOCTYPE html>
 //
 ////GeoJSON
 //
-var geojsonFeature = {"type": "Feature",
-  "properties": {
-      "name": "Coors Field",
-      "amenity": "Baseball Stadium",
-      "popupContent": "This is where the Rockies play!"
-  },
-  "geometry": {
-      "type": "Point",
-      "coordinates": [39.75621,-104.99404]
-      }
-  };
+// var geojsonFeature = {"type": "Feature",
+//   "properties": {
+//       "name": "Coors Field",
+//       "amenity": "Baseball Stadium",
+//       "popupContent": "This is where the Rockies play!"
+//   },
+//   "geometry": {
+//       "type": "Point",
+//       "coordinates": [39.75621,-104.99404]
+//       }
+//   };
 //
 //
     //L.geoJson(geojsonFeature).addData(map);
     var myLayer = L.geoJson().addTo(map);
-    myLayer.addData(geojsonFeature);
+    // myLayer.addData(coorsLayer);
 
 
 
@@ -159,13 +159,11 @@ var geojsonFeature = {"type": "Feature",
 
 
 
-    L.geoJson(myLines, {
-        style: myStyle
-    }).addTo(map);
 
 
-
-    L.geoJson(states, {
+//
+//
+L.geoJson(states, {
     style: function(feature) {
         switch (feature.properties.party) {
             case 'Republican': return {color: "#ff0000"};
@@ -174,13 +172,38 @@ var geojsonFeature = {"type": "Feature",
     }
 }).addTo(map);
 
-L.geoJson(someGeojsonFeature, {
+L.geoJson(coorsField, {
     pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
+        return L.circleMarker([39.75621,-104.99404], geojsonMarkerOptions);
+    },
 }).addTo(map);
 
+
+L.geoJson(myLines, {
+    style: myStyle
+}).addTo(map);
+
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+    }
+}
+
+L.geoJson(coorsField, {
+    onEachFeature: onEachFeature
+}).addTo(map);
+
+
+
+
+
+
+
+
   </script>
+
 
 
 

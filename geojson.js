@@ -1,4 +1,4 @@
-var geojsonFeature = {"type": "Feature",
+var coorsField = {"type": "Feature",
   "properties": {
       "name": "Coors Field",
       "amenity": "Baseball Stadium",
@@ -6,7 +6,7 @@ var geojsonFeature = {"type": "Feature",
   },
   "geometry": {
       "type": "Point",
-      "coordinates": [39.75621,-104.99404]
+      "coordinates": [-104.99404, 39.75621]
       }
   };
 
@@ -15,10 +15,10 @@ var geojsonFeature = {"type": "Feature",
 
 var myLines = [{
 "type": "LineString",
-"coordinates": [[40, -100], [45, -105], [55, -110]]
+"coordinates": [[-100, 40], [-105, 45], [-110, 55]]
 }, {
 "type": "LineString",
-"coordinates": [[40,-105], [45,-110], [55,-115]]
+"coordinates": [[-105, 40], [-110, 45], [-115, 55]]
 }];
 
 
@@ -40,12 +40,12 @@ var states = [{
 "geometry": {
     "type": "Polygon",
     "coordinates": [[
-        [48.99, -104.05],
-        [48.98, -97.22],
-        [45.94,-96.58],
-        [45.94, -104.03],
-        [48.99, -104.05]
-    ]]
+            [-104.05, 48.99],
+            [-97.22,  48.98],
+            [-96.58,  45.94],
+            [-104.03, 45.94],
+            [-104.05, 48.99]
+        ]]
 }
 }, {
 "type": "Feature",
@@ -53,12 +53,12 @@ var states = [{
 "geometry": {
     "type": "Polygon",
     "coordinates": [[
-        [41.00, -109.05],
-        [40.99, -102.06],
-        [36.99, -102.03],
-        [36.99, -109.04],
-        [41.00, -109.05]
-    ]]
+            [-109.05, 41.00],
+            [-102.06, 40.99],
+            [-102.03, 36.99],
+            [-109.04, 36.99],
+            [-109.05, 41.00]
+        ]]
 }
 }];
 
