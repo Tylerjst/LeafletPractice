@@ -18,18 +18,18 @@
 
 
   <script>
-      var map = L.map('map').setView([39.75621,-104.99404], 13);
+      // var map = L.map('map').setView([39.75621,-104.99404], 10);
 
 
 
 
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'your.mapbox.project.id',
-        accessToken: 'your.mapbox.public.access.token'
-  }).addTo(map);
+  //
+  //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  //       maxZoom: 18,
+  //       id: 'your.mapbox.project.id',
+  //       accessToken: 'your.mapbox.public.access.token'
+  // }).addTo(map);
 
 
 //Current Location
@@ -134,7 +134,7 @@
 //
 //
     //L.geoJson(geojsonFeature).addData(map);
-    var myLayer = L.geoJson().addTo(map);
+    // var myLayer = L.geoJson().addTo(map);
     // myLayer.addData(coorsLayer);
 
 
@@ -163,37 +163,62 @@
 
 //
 //
-L.geoJson(states, {
-    style: function(feature) {
-        switch (feature.properties.party) {
-            case 'Republican': return {color: "#ff0000"};
-            case 'Democrat':   return {color: "#0000ff"};
-        }
-    }
-}).addTo(map);
+// L.geoJson(states, {
+//     style: function(feature) {
+//         switch (feature.properties.party) {
+//             case 'Republican': return {color: "#ff0000"};
+//             case 'Democrat':   return {color: "#0000ff"};
+//         }
+//     }
+// }).addTo(map);
+//
+// L.geoJson(coorsField, {
+//     pointToLayer: function (feature, latlng) {
+//         return L.circleMarker([39.75621,-104.99404], geojsonMarkerOptions);
+//     },
+// }).addTo(map);
 
-L.geoJson(coorsField, {
-    pointToLayer: function (feature, latlng) {
-        return L.circleMarker([39.75621,-104.99404], geojsonMarkerOptions);
-    },
-}).addTo(map);
+var littleton = L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.'),
+    denver    = L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.'),
+    aurora    = L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.'),
+    golden    = L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.');
 
+var cities = L.layerGroup([littleton, denver, aurora, golden]);
 
-L.geoJson(myLines, {
-    style: myStyle
-}).addTo(map);
+var grayscale = L.tileLayer('https:{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {id: 'your.mapbox.project.id', attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'}),
+    streets   = L.tileLayer('https:{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {id: 'your.mapbox.project.id', attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'});
 
+var map = L.map('map', {
+  center: [39.73, -104.99],
+  zoom: 10,
+  layers: [grayscale, cities]
+  });
 
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
+var baseMaps = {
+      "Grayscale": grayscale,
+      "Streets": streets
+};
+var overlayMaps = {
+    "Cities": cities
+};
 
-L.geoJson(coorsField, {
-    onEachFeature: onEachFeature
-}).addTo(map);
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+// L.geoJson(myLines, {
+//     style: myStyle
+// }).addTo(map);
+//
+//
+// function onEachFeature(feature, layer) {
+//     // does this feature have a property named popupContent?
+//     if (feature.properties && feature.properties.popupContent) {
+//         layer.bindPopup(feature.properties.popupContent);
+//     }
+// }
+//
+// L.geoJson(coorsField, {
+//     onEachFeature: onEachFeature
+// }).addTo(map);
 
 
 
